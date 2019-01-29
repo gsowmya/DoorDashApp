@@ -9,16 +9,22 @@ import android.support.annotation.Nullable;
 import com.jraska.livedata.TestObserver;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import assignment.doordash.com.doordashapp.activity.dataholders.ListDataHolder;
 import assignment.doordash.com.doordashapp.repository.DoorDashRepository;
+import assignment.doordash.com.doordashapp.repository.dao.RestaurantDao;
 import assignment.doordash.com.doordashapp.repository.dao.RestaurantListRequest;
 import assignment.doordash.com.doordashapp.repository.dao.RestaurantListResponseDao;
 import assignment.doordash.com.doordashapp.repository.webservices.DoorDashApi;
@@ -38,16 +44,11 @@ public class RestaurantListViewModelTest {
     @Mock
     DoorDashRepository doorDashRepository;
 
-    @Mock
-    RestaurantListRequest restaurantListRequest;
-
-    @Mock
-    MutableLiveData<RestaurantListResponseDao> restaurantListResponseDaoMutableLiveData;
-
     RestaurantListViewModel restaurantListViewModel;
 
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
         restaurantListViewModel = new RestaurantListViewModel(doorDashRepository);
     }
 
@@ -57,12 +58,21 @@ public class RestaurantListViewModelTest {
 
     @Test
     public void getRestaurantList() throws Exception {
-        Mockito.when(doorDashRepository.getRestaurantList(restaurantListRequest)).thenReturn(restaurantListResponseDaoMutableLiveData);
-        LiveData<ListDataHolder> restrauntList = restaurantListViewModel.getRestaurantList(restaurantListRequest);
-        restaurantListResponseDaoMutableLiveData.setValue(new RestaurantListResponseDao(null,null));
-        //need to update this library to 1.0.0 and resolve android depedencies to use await() funcion for this test to pass
-        TestObserver.test(restrauntList)
-                .assertHasValue();
+        MutableLiveData data = new MutableLiveData();
+        Mockito.when(doorDashRepository.getRestaurantList(Mockito.any())).thenReturn(data);
+        data.setValue(new RestaurantListResponseDao(getRestrauntDaoListWithMockData(),null));
+        LiveData<ListDataHolder> restrauntList = restaurantListViewModel.getRestaurantList(Mockito.any());
+        ListDataHolder dataHolder = TestObserver.test(restrauntList)
+                .value();
+        Assert.assertTrue("validate name","DishnDash".equals(dataHolder.getRestaurantListItemList().get(0).getName()));
     }
+
+    private List<RestaurantDao> getRestrauntDaoListWithMockData(){
+        List<RestaurantDao> daoList = new ArrayList<>();
+        daoList.add(RestaurantDao.builder().name("DishnDash").build());
+        return daoList;
+    }
+
+
 
 }

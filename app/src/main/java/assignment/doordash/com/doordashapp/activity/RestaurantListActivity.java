@@ -57,7 +57,6 @@ public class RestaurantListActivity extends BaseActivity implements RestaurantLi
         }
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

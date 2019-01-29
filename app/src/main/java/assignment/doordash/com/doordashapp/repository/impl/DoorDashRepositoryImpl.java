@@ -29,6 +29,7 @@ public class DoorDashRepositoryImpl implements DoorDashRepository {
 
     private static final String TAG = DoorDashRepositoryImpl.class.getName();
 
+    @VisibleForTesting
     private DoorDashApi doorDashApi;
 
 
