@@ -9,6 +9,7 @@ public class RestaurantDaoBuilder {
     String coverImgUrl;
     String name;
     String status;
+    boolean likeStatus;
 
     protected RestaurantDaoBuilder(){
 
@@ -51,6 +52,11 @@ public class RestaurantDaoBuilder {
 
     public RestaurantDaoBuilder name(String name) {
         this.name = name;
+        return this;
+    }
+
+    public RestaurantDaoBuilder likeStatus(boolean likeStatus){
+        this.likeStatus = likeStatus;
         return this;
     }
 

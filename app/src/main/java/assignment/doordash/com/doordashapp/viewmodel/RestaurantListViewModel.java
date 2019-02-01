@@ -5,6 +5,7 @@ import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import assignment.doordash.com.doordashapp.R;
+import assignment.doordash.com.doordashapp.Utils;
 import assignment.doordash.com.doordashapp.activity.dataholders.ListDataHolder;
 import assignment.doordash.com.doordashapp.activity.dataholders.RestaurantListItem;
 import assignment.doordash.com.doordashapp.repository.DoorDashRepository;
@@ -59,12 +61,15 @@ public class RestaurantListViewModel extends ViewModel{
     }
 
     private RestaurantListItem convertToViewItem(RestaurantDao restaurantDao){
+
+        Log.d("viewmodel", restaurantDao.getId() + ":" +restaurantDao.isLikeStatus());
         return  RestaurantListItem.builder()
                 .id(restaurantDao.getId())
                 .description(restaurantDao.getDescription())
                 .imageURL(restaurantDao.getCoverImgUrl())
                 .name(restaurantDao.getName())
                 .waitTime(restaurantDao.getStatus())
+                .status(restaurantDao.isLikeStatus())
                 .build();
     }
 

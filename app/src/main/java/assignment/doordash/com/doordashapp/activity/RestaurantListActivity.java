@@ -72,6 +72,7 @@ public class RestaurantListActivity extends BaseActivity implements RestaurantLi
         Location location = locationProvider.getLatLngFromCurrentLocation();
         if(location == null) return;
         LiveData<ListDataHolder> restaurantList = restaurantListViewModel.getRestaurantList(getRestaurantRequest(location,offset));
+
         restaurantList.observe(this, restaurantListObserver);
     }
 

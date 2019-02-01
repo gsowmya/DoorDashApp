@@ -15,6 +15,12 @@ public class RestaurantDao {
     private String coverImgUrl;
     private String name;
 
+    public boolean isLikeStatus() {
+        return likeStatus;
+    }
+
+    private boolean likeStatus;
+
     RestaurantDao(RestaurantDaoBuilder restaurantDaoBuilder){
         this.businessId = restaurantDaoBuilder.businessId;
         this.coverImgUrl = restaurantDaoBuilder.coverImgUrl;
@@ -24,6 +30,7 @@ public class RestaurantDao {
         this.name = restaurantDaoBuilder.name;
         this.status = restaurantDaoBuilder.status;
         this.statusType = restaurantDaoBuilder.statusType;
+        this.likeStatus = restaurantDaoBuilder.likeStatus;
     }
 
     public static RestaurantDaoBuilder builder(){

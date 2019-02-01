@@ -3,6 +3,7 @@ package assignment.doordash.com.doordashapp.di;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.content.Context;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -29,8 +30,8 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    public DoorDashRepository providesDoorDashRepository(DoorDashApi doorDashApi){
-        return new DoorDashRepositoryImpl(doorDashApi);
+    public DoorDashRepository providesDoorDashRepository(Application application,DoorDashApi doorDashApi){
+        return new DoorDashRepositoryImpl(application,doorDashApi);
     }
 
     @Singleton
@@ -38,5 +39,11 @@ public class ApplicationModule {
     @Named("restaurantListLiveData")
     public LiveData<RestaurantListResponseDao> providesRestaurantListLiveData(){
         return new MediatorLiveData<RestaurantListResponseDao>();
+    }
+
+    @Provides
+    @Singleton
+    public Application providesApplication(){
+        return mApplication;
     }
 }

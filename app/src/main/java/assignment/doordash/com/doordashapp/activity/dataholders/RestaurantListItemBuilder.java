@@ -6,6 +6,7 @@ public class RestaurantListItemBuilder {
     String imageURL;
     String description;
     String waitTime;
+    boolean status;
 
     public RestaurantListItemBuilder id(int id) {
         this.id = id;
@@ -29,6 +30,11 @@ public class RestaurantListItemBuilder {
 
     public RestaurantListItemBuilder waitTime(String waitTime) {
         this.waitTime = waitTime;
+        return this;
+    }
+
+    public RestaurantListItemBuilder status(boolean status){
+        this.status = status;
         return this;
     }
 
